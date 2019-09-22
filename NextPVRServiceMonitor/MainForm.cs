@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Security.Principal;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading;
@@ -111,7 +112,7 @@ namespace NextPVRServiceMonitor
                     // Attempt to restart the service until successful
 
                     mNPVRRecSC.Start();
-                    while (mNPVRRecSC.Status != ServiceControllerStatus.Running 
+                    while (mNPVRRecSC.Status != ServiceControllerStatus.Running
                         && bKeepRunning)
                     {
                         Thread.Sleep(500);
@@ -134,10 +135,50 @@ namespace NextPVRServiceMonitor
             }
         }
 
+        private void performSecurityChecks()
+        {
+            // Make sure there isn't already an instance of this app
+
+            int count = 0;
+            Process process = Process.GetCurrentProcess();
+            string name = process.ProcessName;
+            Process[] processes = Process.GetProcesses();
+            for (int i = processes.Length - 1; i >= 0; i--)
+            {
+                if (string.Equals(name, processes[i].ProcessName, 
+                    StringComparison.OrdinalIgnoreCase))
+                    count++;
+            }
+            if (count > 1)
+            {
+                MessageBox.Show(
+                    "There is already an instance of this app running.",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
+
+            // Make sure this app has administrator privileges
+
+            using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
+            {
+                WindowsPrincipal principal = new WindowsPrincipal(identity);
+                if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
+                {
+                    MessageBox.Show(
+                        "This app needs to run with admin privileges.", 
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Application.Exit();
+                }
+            }
+        }
+
         public MainForm()
         {
             InitializeComponent();
+            performSecurityChecks();
             initializeStuff();
+
+            refreshTimer.Enabled = true;
 
             mMainThread = new Thread(mainFunction);
             mMainThread.Start();
@@ -145,14 +186,16 @@ namespace NextPVRServiceMonitor
 
         private void npvrLogLocBTN_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog folderDialog = new FolderBrowserDialog();
-            folderDialog.SelectedPath = mNpvrLogPath;
-            if (folderDialog.ShowDialog() == DialogResult.OK)
+            using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
             {
-                mNpvrLogPath = folderDialog.SelectedPath;
-                npvrLogLocTXT.Text = mNpvrLogPath;
-                Properties.Settings.Default.sLogFilePath = mNpvrLogPath;
-                Properties.Settings.Default.Save();
+                folderDialog.SelectedPath = mNpvrLogPath;
+                if (folderDialog.ShowDialog() == DialogResult.OK)
+                {
+                    mNpvrLogPath = folderDialog.SelectedPath;
+                    npvrLogLocTXT.Text = mNpvrLogPath;
+                    Properties.Settings.Default.sLogFilePath = mNpvrLogPath;
+                    Properties.Settings.Default.Save();
+                }
             }
         }
 
