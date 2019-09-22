@@ -92,7 +92,6 @@ namespace NextPVRServiceMonitor
 
                     mLogBuilder.Append("Stopped ");
                     mLogBuilder.AppendLine(nowDT.ToString("F"));
-                    logTXT.Text = mLogBuilder.ToString();
 
                     mLogFileWriter.Write("Stopped ");
                     mLogFileWriter.WriteLine(nowDT.ToString("F"));
@@ -124,7 +123,6 @@ namespace NextPVRServiceMonitor
 
                     mLogBuilder.Append("Started ");
                     mLogBuilder.AppendLine(nowDT.ToString("F"));
-                    logTXT.Text = mLogBuilder.ToString();
 
                     mLogFileWriter.Write("Started ");
                     mLogFileWriter.WriteLine(nowDT.ToString("F"));
@@ -163,6 +161,11 @@ namespace NextPVRServiceMonitor
             Thread.Sleep(3000);
             mLogFileWriter.Close();
             Properties.Settings.Default.Save();
+        }
+
+        private void refreshTimer_Tick(object sender, EventArgs e)
+        {
+            logTXT.Text = mLogBuilder.ToString();
         }
     }
 }

@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.logTXT = new System.Windows.Forms.TextBox();
             this.npvrLogLocLBL = new System.Windows.Forms.Label();
             this.npvrLogLocTXT = new System.Windows.Forms.TextBox();
             this.npvrLogLocBTN = new System.Windows.Forms.Button();
             this.logLBL = new System.Windows.Forms.Label();
+            this.refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // logTXT
@@ -89,6 +91,11 @@
             this.logLBL.TabIndex = 4;
             this.logLBL.Text = "NextPVR Recording Service Activity Log:";
             // 
+            // refreshTimer
+            // 
+            this.refreshTimer.Enabled = true;
+            this.refreshTimer.Tick += new System.EventHandler(this.refreshTimer_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -114,6 +121,7 @@
         private System.Windows.Forms.TextBox npvrLogLocTXT;
         private System.Windows.Forms.Button npvrLogLocBTN;
         private System.Windows.Forms.Label logLBL;
+        private System.Windows.Forms.Timer refreshTimer;
     }
 }
 
