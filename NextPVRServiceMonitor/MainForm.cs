@@ -40,7 +40,8 @@ namespace NextPVRServiceMonitor
 
             mLogBuilder = new StringBuilder();
 
-            string logFile = Path.Combine(Directory.GetCurrentDirectory(), "Log.txt");
+            string logFile = Path.Combine(Directory.GetCurrentDirectory(), 
+                "NextPVRServiceLog.txt");
             mLogFileWriter = new StreamWriter(logFile, true);
 
             mNpvrLogPath = Properties.Settings.Default.sLogFilePath;
