@@ -26,12 +26,24 @@ namespace NextPVRServiceMonitor.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Public\\NPVR\\Logs")]
-        public string sLogFilePath {
+        public string NpvrLogPath {
             get {
-                return ((string)(this["sLogFilePath"]));
+                return ((string)(this["NpvrLogPath"]));
             }
             set {
-                this["sLogFilePath"] = value;
+                this["NpvrLogPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public int SecsToStart {
+            get {
+                return ((int)(this["SecsToStart"]));
+            }
+            set {
+                this["SecsToStart"] = value;
             }
         }
     }

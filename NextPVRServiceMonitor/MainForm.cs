@@ -45,7 +45,7 @@ namespace NextPVRServiceMonitor
                 "NextPVRServiceLog.txt");
             mLogFileWriter = new StreamWriter(logFile, true);
 
-            mNpvrLogPath = Properties.Settings.Default.sLogFilePath;
+            mNpvrLogPath = Properties.Settings.Default.NpvrLogPath;
             if (!Directory.Exists(mNpvrLogPath))
             {
                 mNpvrLogPath = cDefaultNpvrLogPath;
@@ -194,7 +194,8 @@ namespace NextPVRServiceMonitor
             {
                 // Wait 30 seconds for NextPVR to start the service itself.
                 // This is done just in case this app is run from Startup.
-                Thread.Sleep(30000);
+                int wait = Properties.Settings.Default.SecsToStart;
+                Thread.Sleep(wait * 1000);
                 mMainThread = new Thread(mainFunction);
                 mMainThread.Start();
             }
@@ -209,7 +210,7 @@ namespace NextPVRServiceMonitor
                 {
                     mNpvrLogPath = folderDialog.SelectedPath;
                     npvrLogLocTXT.Text = mNpvrLogPath;
-                    Properties.Settings.Default.sLogFilePath = mNpvrLogPath;
+                    Properties.Settings.Default.NpvrLogPath = mNpvrLogPath;
                     Properties.Settings.Default.Save();
                 }
             }
