@@ -113,11 +113,18 @@ namespace NextPVRServiceMonitor
 
                     // Attempt to restart the service until successful
 
-                    mNPVRRecSC.Start();
-                    while (mNPVRRecSC.Status != ServiceControllerStatus.Running)
+                    try
                     {
-                        Thread.Sleep(500);
-                        mNPVRRecSC.Refresh();
+                        mNPVRRecSC.Start();
+                        while (mNPVRRecSC.Status != ServiceControllerStatus.Running)
+                        {
+                            Thread.Sleep(500);
+                            mNPVRRecSC.Refresh();
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        bKeepRunning = false;
                     }
 
                     nowDT = DateTime.Now;
