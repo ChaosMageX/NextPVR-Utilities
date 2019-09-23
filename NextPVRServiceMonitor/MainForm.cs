@@ -195,6 +195,7 @@ namespace NextPVRServiceMonitor
                 // Wait 30 seconds for NextPVR to start the service itself.
                 // This is done just in case this app is run from Startup.
                 int wait = Properties.Settings.Default.SecsToStart;
+                if (wait <= 0) wait = 30;
                 Thread.Sleep(wait * 1000);
                 mMainThread = new Thread(mainFunction);
                 mMainThread.Start();
