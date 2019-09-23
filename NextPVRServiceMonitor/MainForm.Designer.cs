@@ -93,6 +93,7 @@
             // 
             // refreshTimer
             // 
+            this.refreshTimer.Enabled = true;
             this.refreshTimer.Tick += new System.EventHandler(this.refreshTimer_Tick);
             // 
             // MainForm

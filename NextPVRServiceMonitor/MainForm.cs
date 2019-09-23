@@ -19,7 +19,7 @@ namespace NextPVRServiceMonitor
 
         private ServiceController mNPVRRecSC;
 
-        private StringBuilder mLogBuilder;
+        private StringBuilder mLogBuilder = new StringBuilder();
         private StreamWriter mLogFileWriter;
 
         // Should this be volatile?
@@ -28,8 +28,10 @@ namespace NextPVRServiceMonitor
         private bool bKeepRunning = true;
         private Thread mMainThread;
 
-        private void initializeStuff()
+        private bool initializeStuff()
         {
+            if (!bKeepRunning) return false;
+
             ServiceController[] scServices;
             scServices = ServiceController.GetServices();
             for (int i = scServices.Length - 1; i >= 0; i--)
@@ -38,8 +40,6 @@ namespace NextPVRServiceMonitor
                 if (mNPVRRecSC.ServiceName == "NPVR Recording Service")
                     break;
             }
-
-            mLogBuilder = new StringBuilder();
 
             string logFile = Path.Combine(Directory.GetCurrentDirectory(), 
                 "NextPVRServiceLog.txt");
@@ -52,6 +52,8 @@ namespace NextPVRServiceMonitor
                 Directory.CreateDirectory(mNpvrLogPath);
             }
             npvrLogLocTXT.Text = mNpvrLogPath;
+
+            return true;
         }
 
         private void copyContents(string sourceDir, string targetDir)
@@ -112,8 +114,7 @@ namespace NextPVRServiceMonitor
                     // Attempt to restart the service until successful
 
                     mNPVRRecSC.Start();
-                    while (mNPVRRecSC.Status != ServiceControllerStatus.Running
-                        && bKeepRunning)
+                    while (mNPVRRecSC.Status != ServiceControllerStatus.Running)
                     {
                         Thread.Sleep(500);
                         mNPVRRecSC.Refresh();
@@ -135,7 +136,7 @@ namespace NextPVRServiceMonitor
             }
         }
 
-        private void performSecurityChecks()
+        private bool performSecurityChecks()
         {
             // Make sure there isn't already an instance of this app
 
@@ -154,7 +155,8 @@ namespace NextPVRServiceMonitor
                 MessageBox.Show(
                     "There is already an instance of this app running.",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Application.Exit();
+                bKeepRunning = false;
+                return false;
             }
 
             // Make sure this app has administrator privileges
@@ -167,9 +169,12 @@ namespace NextPVRServiceMonitor
                     MessageBox.Show(
                         "This app needs to run with admin privileges.", 
                         "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    Application.Exit();
+                    bKeepRunning = false;
+                    return false;
                 }
             }
+
+            return true;
         }
 
         public MainForm()
@@ -178,10 +183,11 @@ namespace NextPVRServiceMonitor
             performSecurityChecks();
             initializeStuff();
 
-            refreshTimer.Enabled = true;
-
-            mMainThread = new Thread(mainFunction);
-            mMainThread.Start();
+            if (bKeepRunning)
+            {
+                mMainThread = new Thread(mainFunction);
+                mMainThread.Start();
+            }
         }
 
         private void npvrLogLocBTN_Click(object sender, EventArgs e)
@@ -201,15 +207,33 @@ namespace NextPVRServiceMonitor
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            bKeepRunning = false;
-            Thread.Sleep(3000);
-            mLogFileWriter.Close();
-            Properties.Settings.Default.Save();
+            if (bKeepRunning)
+            {
+                bKeepRunning = false;
+
+                // Wait for the main thread to finish
+
+                while (mNPVRRecSC.Status != ServiceControllerStatus.Running)
+                {
+                    Thread.Sleep(500);
+                    mNPVRRecSC.Refresh();
+                }
+                Thread.Sleep(2000);
+
+                // Free up the allocated resources
+
+                mNPVRRecSC.Close();
+                mLogFileWriter.Close();
+            }
         }
 
         private void refreshTimer_Tick(object sender, EventArgs e)
         {
             logTXT.Text = mLogBuilder.ToString();
+            if (!bKeepRunning)
+            {
+                this.Close();
+            }
         }
     }
 }
