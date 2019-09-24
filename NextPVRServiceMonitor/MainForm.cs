@@ -197,6 +197,7 @@ namespace NextPVRServiceMonitor
                 if (wait <= 0) wait = 30;
                 if (wait > 600) wait = 600;
                 Thread.Sleep(wait * 1000);
+                this.Text = "NextPVR Service Monitor";
                 mMainThread = new Thread(mainFunction);
                 mMainThread.Start();
             }
@@ -244,8 +245,14 @@ namespace NextPVRServiceMonitor
             logTXT.Text = mLogBuilder.ToString();
             if (!bKeepRunning)
             {
+                this.Text = "NextPVR Service Monitor (Closing...)";
                 this.Close();
             }
+        }
+
+        private void backupNpvrLogsBTN_Click(object sender, EventArgs e)
+        {
+            backupNpvrLogs(DateTime.Now);
         }
     }
 }
