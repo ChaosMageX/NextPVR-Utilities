@@ -214,21 +214,6 @@ namespace NextPVRServiceMonitor
             }
         }
 
-        private void npvrLogLocBTN_Click(object sender, EventArgs e)
-        {
-            using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
-            {
-                folderDialog.SelectedPath = mNpvrLogPath;
-                if (folderDialog.ShowDialog() == DialogResult.OK)
-                {
-                    mNpvrLogPath = folderDialog.SelectedPath;
-                    npvrLogLocTXT.Text = mNpvrLogPath;
-                    Properties.Settings.Default.NpvrLogPath = mNpvrLogPath;
-                    Properties.Settings.Default.Save();
-                }
-            }
-        }
-
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (bKeepRunning)
@@ -262,6 +247,21 @@ namespace NextPVRServiceMonitor
             {
                 this.Text = mOriginalTitle + " (Closing...)";
                 this.Close();
+            }
+        }
+
+        private void npvrLogLocBTN_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
+            {
+                folderDialog.SelectedPath = mNpvrLogPath;
+                if (folderDialog.ShowDialog() == DialogResult.OK)
+                {
+                    mNpvrLogPath = folderDialog.SelectedPath;
+                    npvrLogLocTXT.Text = mNpvrLogPath;
+                    Properties.Settings.Default.NpvrLogPath = mNpvrLogPath;
+                    Properties.Settings.Default.Save();
+                }
             }
         }
 
