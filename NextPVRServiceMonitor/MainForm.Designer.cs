@@ -119,8 +119,9 @@
             this.Controls.Add(this.npvrLogLocLBL);
             this.Controls.Add(this.logTXT);
             this.Name = "MainForm";
-            this.Text = "NextPVR Service Monitor (Waiting...)";
+            this.Text = "NextPVR Service Monitor";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
+            this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

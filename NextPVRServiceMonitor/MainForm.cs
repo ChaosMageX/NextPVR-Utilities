@@ -17,8 +17,11 @@ namespace NextPVRServiceMonitor
     {
         private const string cDefaultNpvrLogPath = "C:\\Users\\Public\\NPVR\\Logs";
 
+        private string mOriginalTitle;
+
         private ServiceController mNPVRRecSC;
 
+        private bool bUpdateLogTXT = false; // Volatile?
         private StringBuilder mLogBuilder = new StringBuilder();
         private StreamWriter mLogFileWriter;
 
@@ -101,6 +104,7 @@ namespace NextPVRServiceMonitor
 
                     mLogBuilder.Append("Stopped ");
                     mLogBuilder.AppendLine(nowDT.ToString("F"));
+                    bUpdateLogTXT = true;
 
                     mLogFileWriter.Write("Stopped ");
                     mLogFileWriter.WriteLine(nowDT.ToString("F"));
@@ -132,6 +136,7 @@ namespace NextPVRServiceMonitor
 
                     mLogBuilder.Append("Started ");
                     mLogBuilder.AppendLine(nowDT.ToString("F"));
+                    bUpdateLogTXT = true;
 
                     mLogFileWriter.Write("Started ");
                     mLogFileWriter.WriteLine(nowDT.ToString("F"));
@@ -186,6 +191,12 @@ namespace NextPVRServiceMonitor
         public MainForm()
         {
             InitializeComponent();
+            mOriginalTitle = this.Text;
+            this.Text = mOriginalTitle + " (Waiting...)";
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
             performSecurityChecks();
             initializeStuff();
 
@@ -197,7 +208,7 @@ namespace NextPVRServiceMonitor
                 if (wait <= 0) wait = 30;
                 if (wait > 600) wait = 600;
                 Thread.Sleep(wait * 1000);
-                this.Text = "NextPVR Service Monitor";
+                this.Text = mOriginalTitle;
                 mMainThread = new Thread(mainFunction);
                 mMainThread.Start();
             }
@@ -242,10 +253,14 @@ namespace NextPVRServiceMonitor
 
         private void refreshTimer_Tick(object sender, EventArgs e)
         {
-            logTXT.Text = mLogBuilder.ToString();
+            if (bUpdateLogTXT)
+            {
+                logTXT.Text = mLogBuilder.ToString();
+                bUpdateLogTXT = false;
+            }
             if (!bKeepRunning)
             {
-                this.Text = "NextPVR Service Monitor (Closing...)";
+                this.Text = mOriginalTitle + " (Closing...)";
                 this.Close();
             }
         }
