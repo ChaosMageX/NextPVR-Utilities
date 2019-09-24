@@ -79,12 +79,17 @@ namespace NextPVRServiceMonitor
             }
         }
 
+        private void backupNpvrLogs(DateTime dt)
+        {
+            string path = dt.ToString("_yyyy-dd-MM_HH\\hmm_ss");
+            path = string.Concat(Path.GetFileName(mNpvrLogPath), path);
+            path = Path.Combine(Path.GetDirectoryName(mNpvrLogPath), path);
+            copyContents(mNpvrLogPath, path);
+        }
+
         private void mainFunction()
         {
             DateTime nowDT;
-            string backupPath;
-            string logFolderName;
-            string logFolderParent;
 
             while (bKeepRunning)
             {
@@ -103,13 +108,7 @@ namespace NextPVRServiceMonitor
 
                     // Backup the NextPVR logs
 
-                    logFolderName = Path.GetFileName(mNpvrLogPath);
-                    logFolderParent = Path.GetDirectoryName(mNpvrLogPath);
-
-                    backupPath = nowDT.ToString("_yyyy-dd-MM_HH\\hmm_ss");
-                    backupPath = string.Concat(logFolderName, backupPath);
-                    backupPath = Path.Combine(logFolderParent, backupPath);
-                    copyContents(mNpvrLogPath, backupPath);
+                    backupNpvrLogs(nowDT);
 
                     // Attempt to restart the service until successful
 
