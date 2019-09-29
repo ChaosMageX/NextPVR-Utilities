@@ -17,6 +17,7 @@ namespace NextPVRServiceMonitor
     {
         private const string cDefaultNpvrLogPath = "C:\\Users\\Public\\NPVR\\Logs";
 
+        private bool bResetTitle = false;
         private string mOriginalTitle;
 
         private ServiceController mNPVRRecSC;
@@ -188,6 +189,14 @@ namespace NextPVRServiceMonitor
             return true;
         }
 
+        private void startup(object parameter)
+        {
+            Thread.Sleep((int)parameter);
+            bResetTitle = true;
+            mMainThread = new Thread(mainFunction);
+            mMainThread.Start();
+        }
+
         public MainForm()
         {
             InitializeComponent();
@@ -207,10 +216,8 @@ namespace NextPVRServiceMonitor
                 int wait = Properties.Settings.Default.SecsToStart;
                 if (wait <= 0) wait = 30;
                 if (wait > 600) wait = 600;
-                Thread.Sleep(wait * 1000);
-                this.Text = mOriginalTitle;
-                mMainThread = new Thread(mainFunction);
-                mMainThread.Start();
+                Thread startupThread = new Thread(startup);
+                startupThread.Start(wait * 1000);
             }
         }
 
@@ -242,6 +249,11 @@ namespace NextPVRServiceMonitor
             {
                 logTXT.Text = mLogBuilder.ToString();
                 bUpdateLogTXT = false;
+            }
+            if (bResetTitle)
+            {
+                this.Text = mOriginalTitle;
+                bResetTitle = false;
             }
             if (!bKeepRunning)
             {
