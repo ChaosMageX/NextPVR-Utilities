@@ -133,10 +133,33 @@ namespace NextPVRServiceMonitor
                             mNPVRRecSC.Refresh();
                         }
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         bKeepRunning = false;
+                        nowDT = DateTime.Now;
+
+                        mLogBuilder.Append("  Error ");
+                        mLogBuilder.AppendLine(nowDT.ToString("F"));
+                        bUpdateLogTXT = true;
+
+                        mLogFileWriter.Write("  Error ");
+                        mLogFileWriter.WriteLine(nowDT.ToString("F"));
+                        mLogFileWriter.WriteLine(
+                            "Failed to restart NextPVR Recording Service.");
+                        mLogFileWriter.WriteLine("  Error details below:");
+                        mLogFileWriter.WriteLine("== START ==");
+                        for (Exception inex = ex; inex != null; inex = inex.InnerException)
+                        {
+                            mLogFileWriter.WriteLine(inex.Message);
+                            mLogFileWriter.Write("Help: ");
+                            mLogFileWriter.WriteLine(inex.HelpLink);
+                            mLogFileWriter.WriteLine(inex.StackTrace);
+                            mLogFileWriter.WriteLine("== ----- ==");
+                        }
+                        mLogFileWriter.Flush();
                     }
+
+                    if (!bKeepRunning) break;
 
                     nowDT = DateTime.Now;
 
