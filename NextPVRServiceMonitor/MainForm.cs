@@ -28,6 +28,7 @@ namespace NextPVRServiceMonitor
 
         // Should this be volatile?
         private string mNpvrLogPath;
+        private string mLogBackupPath;
 
         private volatile bool bKeepRunning = true;
         private Thread mMainThread;
@@ -55,9 +56,22 @@ namespace NextPVRServiceMonitor
                 mNpvrLogPath = cDefaultNpvrLogPath;
                 Directory.CreateDirectory(mNpvrLogPath);
             }
+            createBackupPath();
             npvrLogLocTXT.Text = mNpvrLogPath;
 
             return true;
+        }
+
+        private void createBackupPath()
+        {
+            string path = Path.GetFileName(mNpvrLogPath);
+            path = string.Concat(path, "_Backup");
+            path = Path.Combine(Path.GetDirectoryName(mNpvrLogPath), path);
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            mLogBackupPath = path;
         }
 
         private void copyContents(string sourceDir, string targetDir)
@@ -87,7 +101,7 @@ namespace NextPVRServiceMonitor
         {
             string path = dt.ToString("_yyyy-dd-MM_HH\\hmm_ss");
             path = string.Concat(Path.GetFileName(mNpvrLogPath), path);
-            path = Path.Combine(Path.GetDirectoryName(mNpvrLogPath), path);
+            path = Path.Combine(mLogBackupPath, path);
             copyContents(mNpvrLogPath, path);
         }
 
@@ -287,6 +301,7 @@ namespace NextPVRServiceMonitor
                 if (folderDialog.ShowDialog() == DialogResult.OK)
                 {
                     mNpvrLogPath = folderDialog.SelectedPath;
+                    createBackupPath();
                     npvrLogLocTXT.Text = mNpvrLogPath;
                     Properties.Settings.Default.NpvrLogPath = mNpvrLogPath;
                     Properties.Settings.Default.Save();
