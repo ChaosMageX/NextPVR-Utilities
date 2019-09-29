@@ -17,19 +17,19 @@ namespace NextPVRServiceMonitor
     {
         private const string cDefaultNpvrLogPath = "C:\\Users\\Public\\NPVR\\Logs";
 
-        private bool bResetTitle = false;
+        private volatile bool bResetTitle = false;
         private string mOriginalTitle;
 
         private ServiceController mNPVRRecSC;
 
-        private bool bUpdateLogTXT = false; // Volatile?
+        private volatile bool bUpdateLogTXT = false;
         private StringBuilder mLogBuilder = new StringBuilder();
         private StreamWriter mLogFileWriter;
 
         // Should this be volatile?
         private string mNpvrLogPath;
 
-        private bool bKeepRunning = true;
+        private volatile bool bKeepRunning = true;
         private Thread mMainThread;
 
         private bool initializeStuff()
