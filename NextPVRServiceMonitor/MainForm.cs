@@ -189,9 +189,14 @@ namespace NextPVRServiceMonitor
             return true;
         }
 
-        private void startup(object parameter)
+        private void startup()
         {
-            Thread.Sleep((int)parameter);
+            //Wait 30 seconds for NextPVR to start the service itself.
+            // This is done just in case this app is run from Startup.
+            int wait = Properties.Settings.Default.SecsToStart;
+            if (wait <= 0) wait = 30;
+            if (wait > 600) wait = 600;
+            Thread.Sleep(wait * 1000);
             bResetTitle = true;
             mMainThread = new Thread(mainFunction);
             mMainThread.Start();
@@ -211,13 +216,8 @@ namespace NextPVRServiceMonitor
 
             if (bKeepRunning)
             {
-                // Wait 30 seconds for NextPVR to start the service itself.
-                // This is done just in case this app is run from Startup.
-                int wait = Properties.Settings.Default.SecsToStart;
-                if (wait <= 0) wait = 30;
-                if (wait > 600) wait = 600;
                 Thread startupThread = new Thread(startup);
-                startupThread.Start(wait * 1000);
+                startupThread.Start();
             }
         }
 
