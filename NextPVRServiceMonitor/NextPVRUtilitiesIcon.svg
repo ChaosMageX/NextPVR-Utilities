@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+     preserveAspectRatio="xMidYMid meet" viewBox="0 0 640 640" width="640" height="640">
+	<defs>
+		<path d="M 640 325 
+				 C 640 498.85 498.85 640 325 640 
+				 C 151.15 640 10 498.85 10 325 
+				 C 10 151.15 151.15 10 325 10 
+				 C 498.85 10 640 151.15 640 325 
+				 Z" id="logoCircle"></path>
+		<path d="M 200 450 
+				 L 200 300 
+				 C 200 272.39 222.39 250 250 250 
+				 C 277.61 250 300 272.39 300 300 
+				 L 300 350 
+				 C 300 405.23 344.77 450 400 450 
+				 C 427.61 450 450 472.39 450 500 
+				 L 500 500 
+				 L 500 200 
+				 L 450 200 
+				 L 450 350 
+				 C 450 377.61 427.61 400 400 400 
+				 C 372.39 400 350 377.61 350 350 
+				 L 350 300 
+				 C 350 244.77 305.23 200 250 200 
+				 C 222.39 200 200 177.61 200 150 
+				 L 150 150 
+				 L 150 450 
+				 L 200 450 
+				 Z" id="logoLetters"></path>
+	</defs>
+	<g>
+		<use xlink:href="#logoCircle" opacity="1" fill="#183162" fill-opacity="1"></use>
+		<use xlink:href="#logoLetters" opacity="1" fill="#ffffff" fill-opacity="1"></use>
+		<use xlink:href="#logoLetters" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="5" stroke-opacity="1"></use>
+	</g>
+</svg>
