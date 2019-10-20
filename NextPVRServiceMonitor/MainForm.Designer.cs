@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.logTXT = new System.Windows.Forms.TextBox();
             this.npvrLogLocLBL = new System.Windows.Forms.Label();
             this.npvrLogLocTXT = new System.Windows.Forms.TextBox();
@@ -119,7 +118,6 @@
             this.Controls.Add(this.npvrLogLocTXT);
             this.Controls.Add(this.npvrLogLocLBL);
             this.Controls.Add(this.logTXT);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "NextPVR Service Monitor";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);

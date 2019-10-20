@@ -254,6 +254,10 @@ namespace NextPVRServiceMonitor
             InitializeComponent();
             mOriginalTitle = this.Text;
             this.Text = mOriginalTitle + " (Waiting...)";
+            var exe = System.Reflection.Assembly.GetExecutingAssembly();
+            Stream iconStream = exe.GetManifestResourceStream(
+                "NextPVRServiceMonitor.NextPVRUtilitiesIcon.ico");
+            this.Icon = new Icon(iconStream);
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
