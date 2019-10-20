@@ -50,6 +50,10 @@ namespace NextPVRServiceMonitor
                 "NextPVRServiceLog.txt");
             mLogFileWriter = new StreamWriter(logFile, true);
 
+            mLogFileWriter.Write("Program Started at ");
+            mLogFileWriter.WriteLine(DateTime.Now.ToString("F"));
+            mLogFileWriter.Flush();
+
             mNpvrLogPath = Properties.Settings.Default.NpvrLogPath;
             if (!Directory.Exists(mNpvrLogPath))
             {
@@ -116,6 +120,11 @@ namespace NextPVRServiceMonitor
             Thread.Sleep(wait * 1000);
             bResetTitle = true;
 
+            nowDT = DateTime.Now;
+            mLogFileWriter.Write("Monitor Started at ");
+            mLogFileWriter.WriteLine(nowDT.ToString("F"));
+            mLogFileWriter.Flush();
+
             while (bKeepRunning)
             {
                 if (mNPVRRecSC.Status == ServiceControllerStatus.Stopped)
@@ -124,11 +133,11 @@ namespace NextPVRServiceMonitor
                     
                     // Log and report the time the service stopped
 
-                    mLogBuilder.Append("Stopped ");
+                    mLogBuilder.Append("Stopped at ");
                     mLogBuilder.AppendLine(nowDT.ToString("F"));
                     bUpdateLogTXT = true;
 
-                    mLogFileWriter.Write("Stopped ");
+                    mLogFileWriter.Write("Service Stopped at ");
                     mLogFileWriter.WriteLine(nowDT.ToString("F"));
                     mLogFileWriter.Flush();
 
@@ -152,24 +161,26 @@ namespace NextPVRServiceMonitor
                         bKeepRunning = false;
                         nowDT = DateTime.Now;
 
-                        mLogBuilder.Append("  Error ");
+                        mLogBuilder.Append("  Error at ");
                         mLogBuilder.AppendLine(nowDT.ToString("F"));
                         bUpdateLogTXT = true;
-
-                        mLogFileWriter.Write("  Error ");
+                        
+                        mLogFileWriter.Write(" ERROR Occurred at ");
                         mLogFileWriter.WriteLine(nowDT.ToString("F"));
                         mLogFileWriter.WriteLine(
                             "Failed to restart NextPVR Recording Service.");
-                        mLogFileWriter.WriteLine("  Error details below:");
+                        mLogFileWriter.WriteLine(" Error details below:");
                         mLogFileWriter.WriteLine("== START ==");
                         for (Exception inex = ex; inex != null; inex = inex.InnerException)
                         {
                             mLogFileWriter.WriteLine(inex.Message);
                             mLogFileWriter.Write("Help: ");
-                            mLogFileWriter.WriteLine(inex.HelpLink);
+                            mLogFileWriter.WriteLine(inex.HelpLink ?? "NO LINK GIVEN");
                             mLogFileWriter.WriteLine(inex.StackTrace);
                             mLogFileWriter.WriteLine("== ----- ==");
                         }
+                        mLogFileWriter.WriteLine("==  END  ==");
+                        mLogFileWriter.WriteLine();
                         mLogFileWriter.Flush();
                     }
 
@@ -179,17 +190,22 @@ namespace NextPVRServiceMonitor
 
                     // Log and report the time the service started again
 
-                    mLogBuilder.Append("Started ");
+                    mLogBuilder.Append("Started at ");
                     mLogBuilder.AppendLine(nowDT.ToString("F"));
                     bUpdateLogTXT = true;
 
-                    mLogFileWriter.Write("Started ");
+                    mLogFileWriter.Write("Service Started at ");
                     mLogFileWriter.WriteLine(nowDT.ToString("F"));
                     mLogFileWriter.Flush();
                 }
                 Thread.Sleep(1000);
                 mNPVRRecSC.Refresh();
             }
+
+            nowDT = DateTime.Now;
+            mLogFileWriter.Write("Monitor Stopped at ");
+            mLogFileWriter.WriteLine(nowDT.ToString("F"));
+            mLogFileWriter.Flush();
         }
 
         private bool performSecurityChecks()
@@ -270,6 +286,9 @@ namespace NextPVRServiceMonitor
                 // Free up the allocated resources
 
                 mNPVRRecSC.Close();
+                mLogFileWriter.Write("Program Stopped at ");
+                mLogFileWriter.WriteLine(DateTime.Now.ToString("F"));
+                mLogFileWriter.Flush();
                 mLogFileWriter.Close();
             }
         }
