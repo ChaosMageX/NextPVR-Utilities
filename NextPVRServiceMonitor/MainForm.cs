@@ -86,6 +86,7 @@ namespace NextPVRServiceMonitor
                 // Free up the allocated resources
 
                 mNPVRRecSC.Close();
+                mLogFileWriter.WriteLine();
                 mLogFileWriter.Close();
 
                 bKeepRunning = false;
@@ -248,6 +249,7 @@ namespace NextPVRServiceMonitor
             // Free up the allocated resources
 
             mNPVRRecSC.Close();
+            mLogFileWriter.WriteLine();
             mLogFileWriter.Close();
         }
 
