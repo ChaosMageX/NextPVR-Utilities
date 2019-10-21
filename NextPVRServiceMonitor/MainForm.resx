@@ -250,7 +250,7 @@
     <value>NoControl</value>
   </data>
   <data name="logLBL.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 49</value>
+    <value>13, 41</value>
   </data>
   <data name="logLBL.Size" type="System.Drawing.Size, System.Drawing">
     <value>203, 13</value>
