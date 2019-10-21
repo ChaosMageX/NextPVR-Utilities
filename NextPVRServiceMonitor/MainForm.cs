@@ -58,8 +58,10 @@ namespace NextPVRServiceMonitor
 
             if (i < 0)
             {
-                MessageBox.Show("No NextPVR Recording Service was found.", 
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    Properties.Resources.ErrorNoNPVRSvc, 
+                    Properties.Resources.ErrorTitle, 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 mLogFileWriter.Write(" ERROR: ");
                 mLogFileWriter.WriteLine("No NextPVR Recording Service Found.");
@@ -172,8 +174,9 @@ namespace NextPVRServiceMonitor
                     
                     // Log and report the time the service stopped
 
-                    mLogBuilder.Append("Stopped at ");
-                    mLogBuilder.AppendLine(nowDT.ToString("F"));
+                    mLogBuilder.AppendFormat(
+                        Properties.Resources.SvcStoppedAt, nowDT);
+                    mLogBuilder.AppendLine();
                     bUpdateLogTXT = true;
 
                     mLogFileWriter.Write("Service Stopped at ");
@@ -200,8 +203,9 @@ namespace NextPVRServiceMonitor
                         bKeepRunning = false;
                         nowDT = DateTime.Now;
 
-                        mLogBuilder.Append("  Error at ");
-                        mLogBuilder.AppendLine(nowDT.ToString("F"));
+                        mLogBuilder.AppendFormat(
+                            Properties.Resources.SvcErrorAt, nowDT);
+                        mLogBuilder.AppendLine();
                         bUpdateLogTXT = true;
                         
                         mLogFileWriter.Write(" ERROR Occurred at ");
@@ -229,8 +233,9 @@ namespace NextPVRServiceMonitor
 
                     // Log and report the time the service started again
 
-                    mLogBuilder.Append("Started at ");
-                    mLogBuilder.AppendLine(nowDT.ToString("F"));
+                    mLogBuilder.AppendFormat(
+                        Properties.Resources.SvcStartedAt, nowDT);
+                    mLogBuilder.AppendLine();
                     bUpdateLogTXT = true;
 
                     mLogFileWriter.Write("Service Started at ");
@@ -270,8 +275,9 @@ namespace NextPVRServiceMonitor
             if (count > 1)
             {
                 MessageBox.Show(
-                    "There is already an instance of this app running.",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Properties.Resources.ErrorMultipleApps,
+                    Properties.Resources.ErrorTitle, 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 bKeepRunning = false;
                 return false;
             }
@@ -284,8 +290,9 @@ namespace NextPVRServiceMonitor
                 if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
                 {
                     MessageBox.Show(
-                        "This app needs to run with admin privileges.", 
-                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Properties.Resources.ErrorNeedsAdmin, 
+                        Properties.Resources.ErrorTitle, 
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                     bKeepRunning = false;
                     return false;
                 }
@@ -298,7 +305,8 @@ namespace NextPVRServiceMonitor
         {
             InitializeComponent();
             mOriginalTitle = this.Text;
-            this.Text = mOriginalTitle + " (Waiting...)";
+            this.Text = string.Format(mOriginalTitle + " ({0})", 
+                Properties.Resources.TitleWaiting);
             var exe = System.Reflection.Assembly.GetExecutingAssembly();
             Stream iconStream = exe.GetManifestResourceStream(
                 "NextPVRServiceMonitor.NextPVRUtilitiesIcon.ico");
@@ -343,7 +351,8 @@ namespace NextPVRServiceMonitor
             }
             if (!bKeepRunning)
             {
-                this.Text = mOriginalTitle + " (Closing...)";
+                this.Text = string.Format(mOriginalTitle + " ({0})", 
+                    Properties.Resources.TitleClosing);
                 this.Close();
             }
         }

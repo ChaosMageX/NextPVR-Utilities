@@ -59,5 +59,86 @@ namespace NextPVRServiceMonitor.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is already an instance of this app running..
+        /// </summary>
+        internal static string ErrorMultipleApps {
+            get {
+                return ResourceManager.GetString("ErrorMultipleApps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This app needs to run with admin privileges..
+        /// </summary>
+        internal static string ErrorNeedsAdmin {
+            get {
+                return ResourceManager.GetString("ErrorNeedsAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No NextPVR Recording Service was found..
+        /// </summary>
+        internal static string ErrorNoNPVRSvc {
+            get {
+                return ResourceManager.GetString("ErrorNoNPVRSvc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string ErrorTitle {
+            get {
+                return ResourceManager.GetString("ErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to   Error at {0:F}.
+        /// </summary>
+        internal static string SvcErrorAt {
+            get {
+                return ResourceManager.GetString("SvcErrorAt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Started at {0:F}.
+        /// </summary>
+        internal static string SvcStartedAt {
+            get {
+                return ResourceManager.GetString("SvcStartedAt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stopped at {0:F}.
+        /// </summary>
+        internal static string SvcStoppedAt {
+            get {
+                return ResourceManager.GetString("SvcStoppedAt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Closing....
+        /// </summary>
+        internal static string TitleClosing {
+            get {
+                return ResourceManager.GetString("TitleClosing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waiting....
+        /// </summary>
+        internal static string TitleWaiting {
+            get {
+                return ResourceManager.GetString("TitleWaiting", resourceCulture);
+            }
+        }
     }
 }

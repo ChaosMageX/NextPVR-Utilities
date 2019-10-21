@@ -117,4 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ErrorMultipleApps" xml:space="preserve">
+    <value>There is already an instance of this app running.</value>
+  </data>
+  <data name="ErrorNeedsAdmin" xml:space="preserve">
+    <value>This app needs to run with admin privileges.</value>
+  </data>
+  <data name="ErrorNoNPVRSvc" xml:space="preserve">
+    <value>No NextPVR Recording Service was found.</value>
+  </data>
+  <data name="ErrorTitle" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="SvcErrorAt" xml:space="preserve">
+    <value>  Error at {0:F}</value>
+  </data>
+  <data name="SvcStartedAt" xml:space="preserve">
+    <value>Started at {0:F}</value>
+  </data>
+  <data name="SvcStoppedAt" xml:space="preserve">
+    <value>Stopped at {0:F}</value>
+  </data>
+  <data name="TitleClosing" xml:space="preserve">
+    <value>Closing...</value>
+  </data>
+  <data name="TitleWaiting" xml:space="preserve">
+    <value>Waiting...</value>
+  </data>
 </root>
