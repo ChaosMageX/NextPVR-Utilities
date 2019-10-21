@@ -43,7 +43,7 @@
             this.logTXT.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.logTXT.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.logTXT.Font = new System.Drawing.Font("Consolas", 8.25F);
             this.logTXT.Location = new System.Drawing.Point(13, 65);
             this.logTXT.Multiline = true;
             this.logTXT.Name = "logTXT";
@@ -55,6 +55,7 @@
             // npvrLogLocLBL
             // 
             this.npvrLogLocLBL.AutoSize = true;
+            this.npvrLogLocLBL.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.npvrLogLocLBL.Location = new System.Drawing.Point(13, 13);
             this.npvrLogLocLBL.Name = "npvrLogLocLBL";
             this.npvrLogLocLBL.Size = new System.Drawing.Size(112, 13);
@@ -75,6 +76,7 @@
             // npvrLogLocBTN
             // 
             this.npvrLogLocBTN.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.npvrLogLocBTN.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.npvrLogLocBTN.Location = new System.Drawing.Point(497, 8);
             this.npvrLogLocBTN.Name = "npvrLogLocBTN";
             this.npvrLogLocBTN.Size = new System.Drawing.Size(75, 23);
@@ -86,6 +88,7 @@
             // logLBL
             // 
             this.logLBL.AutoSize = true;
+            this.logLBL.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.logLBL.Location = new System.Drawing.Point(12, 49);
             this.logLBL.Name = "logLBL";
             this.logLBL.Size = new System.Drawing.Size(203, 13);
@@ -99,6 +102,7 @@
             // 
             // backupNpvrLogsBTN
             // 
+            this.backupNpvrLogsBTN.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.backupNpvrLogsBTN.Location = new System.Drawing.Point(402, 36);
             this.backupNpvrLogsBTN.Name = "backupNpvrLogsBTN";
             this.backupNpvrLogsBTN.Size = new System.Drawing.Size(170, 23);
@@ -118,6 +122,7 @@
             this.Controls.Add(this.npvrLogLocTXT);
             this.Controls.Add(this.npvrLogLocLBL);
             this.Controls.Add(this.logTXT);
+            this.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.Name = "MainForm";
             this.Text = "NextPVR Service Monitor";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
