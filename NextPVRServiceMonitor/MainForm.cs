@@ -305,8 +305,8 @@ namespace NextPVRServiceMonitor
         {
             InitializeComponent();
             mOriginalTitle = this.Text;
-            this.Text = string.Format(mOriginalTitle + " ({0})", 
-                Properties.Resources.TitleWaiting);
+            this.Text = string.Format(
+                Properties.Resources.TitleWaiting, mOriginalTitle);
             var exe = System.Reflection.Assembly.GetExecutingAssembly();
             Stream iconStream = exe.GetManifestResourceStream(
                 "NextPVRServiceMonitor.NextPVRUtilitiesIcon.ico");
@@ -351,8 +351,8 @@ namespace NextPVRServiceMonitor
             }
             if (!bKeepRunning)
             {
-                this.Text = string.Format(mOriginalTitle + " ({0})", 
-                    Properties.Resources.TitleClosing);
+                this.Text = string.Format(
+                    Properties.Resources.TitleClosing, mOriginalTitle);
                 this.Close();
             }
         }

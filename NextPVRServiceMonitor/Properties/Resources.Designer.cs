@@ -124,7 +124,7 @@ namespace NextPVRServiceMonitor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Closing....
+        ///   Looks up a localized string similar to {0} (Closing...).
         /// </summary>
         internal static string TitleClosing {
             get {
@@ -133,7 +133,7 @@ namespace NextPVRServiceMonitor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Waiting....
+        ///   Looks up a localized string similar to {0} (Waiting...).
         /// </summary>
         internal static string TitleWaiting {
             get {

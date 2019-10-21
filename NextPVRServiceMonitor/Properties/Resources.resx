@@ -139,9 +139,9 @@
     <value>Stopped at {0:F}</value>
   </data>
   <data name="TitleClosing" xml:space="preserve">
-    <value>Closing...</value>
+    <value>{0} (Closing...)</value>
   </data>
   <data name="TitleWaiting" xml:space="preserve">
-    <value>Waiting...</value>
+    <value>{0} (Waiting...)</value>
   </data>
 </root>
