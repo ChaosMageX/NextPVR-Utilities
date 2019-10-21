@@ -132,6 +132,9 @@
   <data name="logTXT.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
+  <data name="logTXT.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
+    <value>Vertical</value>
+  </data>
   <data name="logTXT.Size" type="System.Drawing.Size, System.Drawing">
     <value>559, 284</value>
   </data>
@@ -273,6 +276,9 @@
   <metadata name="refreshTimer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="backupNpvrLogsBTN.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
   <data name="backupNpvrLogsBTN.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -311,6 +317,9 @@
   </data>
   <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
+  </data>
+  <data name="$this.MinimumSize" type="System.Drawing.Size, System.Drawing">
+    <value>450, 200</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>NextPVR Service Monitor</value>
