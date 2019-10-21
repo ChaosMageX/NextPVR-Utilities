@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.logTXT = new System.Windows.Forms.TextBox();
             this.npvrLogLocLBL = new System.Windows.Forms.Label();
             this.npvrLogLocTXT = new System.Windows.Forms.TextBox();
@@ -40,60 +41,32 @@
             // 
             // logTXT
             // 
-            this.logTXT.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.logTXT.Font = new System.Drawing.Font("Consolas", 8.25F);
-            this.logTXT.Location = new System.Drawing.Point(13, 65);
-            this.logTXT.Multiline = true;
+            resources.ApplyResources(this.logTXT, "logTXT");
             this.logTXT.Name = "logTXT";
             this.logTXT.ReadOnly = true;
-            this.logTXT.Size = new System.Drawing.Size(559, 284);
-            this.logTXT.TabIndex = 0;
-            this.logTXT.WordWrap = false;
             // 
             // npvrLogLocLBL
             // 
-            this.npvrLogLocLBL.AutoSize = true;
-            this.npvrLogLocLBL.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.npvrLogLocLBL.Location = new System.Drawing.Point(13, 13);
+            resources.ApplyResources(this.npvrLogLocLBL, "npvrLogLocLBL");
             this.npvrLogLocLBL.Name = "npvrLogLocLBL";
-            this.npvrLogLocLBL.Size = new System.Drawing.Size(112, 13);
-            this.npvrLogLocLBL.TabIndex = 1;
-            this.npvrLogLocLBL.Text = "NextPVR Logs Folder:";
             // 
             // npvrLogLocTXT
             // 
-            this.npvrLogLocTXT.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.npvrLogLocTXT.Location = new System.Drawing.Point(131, 10);
+            resources.ApplyResources(this.npvrLogLocTXT, "npvrLogLocTXT");
             this.npvrLogLocTXT.Name = "npvrLogLocTXT";
             this.npvrLogLocTXT.ReadOnly = true;
-            this.npvrLogLocTXT.Size = new System.Drawing.Size(360, 20);
-            this.npvrLogLocTXT.TabIndex = 2;
-            this.npvrLogLocTXT.Text = "C:\\Users\\Public\\NPVR\\Logs";
             // 
             // npvrLogLocBTN
             // 
-            this.npvrLogLocBTN.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.npvrLogLocBTN.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.npvrLogLocBTN.Location = new System.Drawing.Point(497, 8);
+            resources.ApplyResources(this.npvrLogLocBTN, "npvrLogLocBTN");
             this.npvrLogLocBTN.Name = "npvrLogLocBTN";
-            this.npvrLogLocBTN.Size = new System.Drawing.Size(75, 23);
-            this.npvrLogLocBTN.TabIndex = 3;
-            this.npvrLogLocBTN.Text = "Browse";
             this.npvrLogLocBTN.UseVisualStyleBackColor = true;
             this.npvrLogLocBTN.Click += new System.EventHandler(this.npvrLogLocBTN_Click);
             // 
             // logLBL
             // 
-            this.logLBL.AutoSize = true;
-            this.logLBL.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.logLBL.Location = new System.Drawing.Point(12, 49);
+            resources.ApplyResources(this.logLBL, "logLBL");
             this.logLBL.Name = "logLBL";
-            this.logLBL.Size = new System.Drawing.Size(203, 13);
-            this.logLBL.TabIndex = 4;
-            this.logLBL.Text = "NextPVR Recording Service Activity Log:";
             // 
             // refreshTimer
             // 
@@ -102,29 +75,22 @@
             // 
             // backupNpvrLogsBTN
             // 
-            this.backupNpvrLogsBTN.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.backupNpvrLogsBTN.Location = new System.Drawing.Point(402, 36);
+            resources.ApplyResources(this.backupNpvrLogsBTN, "backupNpvrLogsBTN");
             this.backupNpvrLogsBTN.Name = "backupNpvrLogsBTN";
-            this.backupNpvrLogsBTN.Size = new System.Drawing.Size(170, 23);
-            this.backupNpvrLogsBTN.TabIndex = 5;
-            this.backupNpvrLogsBTN.Text = "Backup NextPVR Logs Now";
             this.backupNpvrLogsBTN.UseVisualStyleBackColor = true;
             this.backupNpvrLogsBTN.Click += new System.EventHandler(this.backupNpvrLogsBTN_Click);
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 361);
             this.Controls.Add(this.backupNpvrLogsBTN);
             this.Controls.Add(this.logLBL);
             this.Controls.Add(this.npvrLogLocBTN);
             this.Controls.Add(this.npvrLogLocTXT);
             this.Controls.Add(this.npvrLogLocLBL);
             this.Controls.Add(this.logTXT);
-            this.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.Name = "MainForm";
-            this.Text = "NextPVR Service Monitor";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.ResumeLayout(false);
