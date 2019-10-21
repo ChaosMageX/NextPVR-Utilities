@@ -15,6 +15,7 @@ namespace NextPVRServiceMonitor
 {
     public partial class MainForm : Form
     {
+        private const string cNpvrServiceName = "NPVR Recording Service";
         private const string cDefaultNpvrLogPath = "C:\\Users\\Public\\NPVR\\Logs";
 
         private volatile bool bResetTitle = false;
@@ -37,12 +38,13 @@ namespace NextPVRServiceMonitor
         {
             if (!bKeepRunning) return false;
 
+            int i;
             ServiceController[] scServices;
             scServices = ServiceController.GetServices();
-            for (int i = scServices.Length - 1; i >= 0; i--)
+            for (i = scServices.Length - 1; i >= 0; i--)
             {
                 mNPVRRecSC = scServices[i];
-                if (mNPVRRecSC.ServiceName == "NPVR Recording Service")
+                if (mNPVRRecSC.ServiceName == cNpvrServiceName)
                     break;
             }
 
@@ -53,6 +55,42 @@ namespace NextPVRServiceMonitor
             mLogFileWriter.Write("Program Started at ");
             mLogFileWriter.WriteLine(DateTime.Now.ToString("F"));
             mLogFileWriter.Flush();
+
+            if (i < 0)
+            {
+                MessageBox.Show("No NextPVR Recording Service was found.", 
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                mLogFileWriter.Write(" ERROR: ");
+                mLogFileWriter.WriteLine("No NextPVR Recording Service Found.");
+                mLogFileWriter.WriteLine("Services Listed Below: ");
+                mLogFileWriter.WriteLine();
+
+                string format = "{0,";
+                format += (scServices.Length.ToString().Length + 2).ToString();
+                format += "}: {1}";
+                mLogFileWriter.WriteLine(format, "#", "Service Name");
+                mLogFileWriter.WriteLine();
+                for (i = scServices.Length - 1; i >= 0; i--)
+                {
+                    mNPVRRecSC = scServices[i];
+                    mLogFileWriter.WriteLine(format, i + 1, mNPVRRecSC.ServiceName);
+                }
+                mLogFileWriter.WriteLine();
+                mLogFileWriter.Flush();
+
+                mLogFileWriter.Write("Program Stopped at ");
+                mLogFileWriter.WriteLine(DateTime.Now.ToString("F"));
+                mLogFileWriter.Flush();
+
+                // Free up the allocated resources
+
+                mNPVRRecSC.Close();
+                mLogFileWriter.Close();
+
+                bKeepRunning = false;
+                return false;
+            }
 
             mNpvrLogPath = Properties.Settings.Default.NpvrLogPath;
             if (!Directory.Exists(mNpvrLogPath))
@@ -206,6 +244,11 @@ namespace NextPVRServiceMonitor
             mLogFileWriter.Write("Monitor Stopped at ");
             mLogFileWriter.WriteLine(nowDT.ToString("F"));
             mLogFileWriter.Flush();
+
+            // Free up the allocated resources
+
+            mNPVRRecSC.Close();
+            mLogFileWriter.Close();
         }
 
         private bool performSecurityChecks()
@@ -276,24 +319,11 @@ namespace NextPVRServiceMonitor
         {
             if (bKeepRunning)
             {
-                bKeepRunning = false;
-
-                // Wait for the main thread to finish
-
-                while (mNPVRRecSC.Status != ServiceControllerStatus.Running)
-                {
-                    Thread.Sleep(500);
-                    mNPVRRecSC.Refresh();
-                }
-                Thread.Sleep(2000);
-
-                // Free up the allocated resources
-
-                mNPVRRecSC.Close();
                 mLogFileWriter.Write("Program Stopped at ");
                 mLogFileWriter.WriteLine(DateTime.Now.ToString("F"));
                 mLogFileWriter.Flush();
-                mLogFileWriter.Close();
+
+                bKeepRunning = false;
             }
         }
 
